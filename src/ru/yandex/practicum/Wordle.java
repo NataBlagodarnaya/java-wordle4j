@@ -20,14 +20,14 @@ import java.util.Scanner;
 public class Wordle {
     private static Scanner scanner = new Scanner(System.in);
     private static WordleGame game;
-    private static final String DICTIONARY_FILE_NAME = "words_ru.txt";
+    static final String DICTIONARY_FILE_NAME = "words_ru.txt";
 
     public static void main(String[] args) {
         PrintWriter logger = null;
         try {
             Path logPath = createLog(DICTIONARY_FILE_NAME);
             logger = new PrintWriter(new FileWriter(logPath.toFile(), true));
-        } catch (Exception e) {//если лог не создался это не уронит игру, она продолжится без логирования
+        } catch (Exception e) {
         }
         try {
             runGame(DICTIONARY_FILE_NAME, logger);
