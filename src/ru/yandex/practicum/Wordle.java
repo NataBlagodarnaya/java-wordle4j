@@ -20,17 +20,18 @@ import java.util.Scanner;
 public class Wordle {
     private static Scanner scanner = new Scanner(System.in);
     private static WordleGame game;
-    static final String DICTIONARY_FILE_NAME = "words_ru.txt";
+    private static final String dictionaryFileName = "words_ru.txt";
 
     public static void main(String[] args) {
         PrintWriter logger = null;
         try {
-            Path logPath = createLog(DICTIONARY_FILE_NAME);
+            Path logPath = createLog(dictionaryFileName);
             logger = new PrintWriter(new FileWriter(logPath.toFile(), true));
         } catch (Exception e) {
+            // если лог не создается то пользователь продолжает игру просто она не логируется
         }
         try {
-            runGame(DICTIONARY_FILE_NAME, logger);
+            runGame(dictionaryFileName, logger);
         } catch (Exception e) {
             System.out.println("Игра сломалась :(");
             if (logger != null) {
