@@ -20,18 +20,18 @@ import java.util.Scanner;
 public class Wordle {
     private static Scanner scanner = new Scanner(System.in);
     private static WordleGame game;
-    private static final String dictionaryFileName = "words_ru.txt";
+    private static final String DICTIONARY_FILE_NAME = "words_ru.txt";
 
     public static void main(String[] args) {
         PrintWriter logger = null;
         try {
-            Path logPath = createLog(dictionaryFileName);
+            Path logPath = createLog(DICTIONARY_FILE_NAME);
             logger = new PrintWriter(new FileWriter(logPath.toFile(), true));
         } catch (Exception e) {
             // если лог не создается то пользователь продолжает игру просто она не логируется
         }
         try {
-            runGame(dictionaryFileName, logger);
+            runGame(DICTIONARY_FILE_NAME, logger);
         } catch (Exception e) {
             System.out.println("Игра сломалась :(");
             if (logger != null) {
@@ -42,10 +42,10 @@ public class Wordle {
         }
     }
 
-    public static void runGame(String DICTIONARY_FILE_NAME, PrintWriter logger) throws
+    public static void runGame(String dictionaryFileName, PrintWriter logger) throws
             IOException, WordleNotGameException {
         WordleDictionaryLoader loader = new WordleDictionaryLoader();
-        game = new WordleGame(loader.load(DICTIONARY_FILE_NAME), logger);
+        game = new WordleGame(loader.load(dictionaryFileName), logger);
         System.out.println("Привет! Я загадал слово из словаря. Это существительное в именительном падеже из " +
                 WordleDictionaryLoader.LETTERS_COUNT + " русских букв.");
         System.out.println("_".repeat(25));
@@ -75,8 +75,8 @@ public class Wordle {
         }
     }
 
-    public static Path createLog(String DICTIONARY_FILE_NAME) throws IOException {
-        String dictionaryPath = Path.of(DICTIONARY_FILE_NAME).toAbsolutePath().getParent().toString();
+    public static Path createLog(String dictionaryFileName) throws IOException {
+        String dictionaryPath = Path.of(dictionaryFileName).toAbsolutePath().getParent().toString();
         Path logPath = Paths.get(dictionaryPath, "log.txt");
         if (!Files.exists(logPath)) {
             Files.createFile(logPath);
