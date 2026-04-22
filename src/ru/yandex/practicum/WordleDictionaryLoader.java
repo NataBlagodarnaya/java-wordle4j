@@ -16,7 +16,7 @@ public class WordleDictionaryLoader {
 
     static final int LETTERS_COUNT = 5;//количество букв в загаданном слове
 
-    public WordleDictionary load (String filename) throws IOException, WordleNotGameException {
+    public WordleDictionary load(String filename) throws IOException, WordleNotGameException {
         List<String> words = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename, StandardCharsets.UTF_8))) {

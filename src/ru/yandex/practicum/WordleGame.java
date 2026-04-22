@@ -1,7 +1,6 @@
 package ru.yandex.practicum;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +84,7 @@ public class WordleGame {
     private void logGameProgress() { //логирование основных переменных игры
         logger.println("\n" + "Я загадал слово: " + this.correctAnswer + "\n" +
                 "Попытка: " + this.steps + "\n" + "Ответ игрока: " +
-                        this.userAnswer + "\n");
+                this.userAnswer + "\n");
     }
 
     public String giveHint() { //даем подсказку
@@ -110,7 +109,7 @@ public class WordleGame {
             if (this.userAnswer.charAt(i) == (this.correctAnswer.charAt(i))) {
                 matchResult.setCharAt(i, '+');
                 char iChar = this.userAnswer.charAt(i);
-               int currentIndex = i;
+                int currentIndex = i;
                 this.dictionary.getWords().removeIf(word -> word.charAt(currentIndex) != iChar);
             } else {
                 if (this.correctAnswer.indexOf(this.userAnswer.charAt(i)) != -1) {
