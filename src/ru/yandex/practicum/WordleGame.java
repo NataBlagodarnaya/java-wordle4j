@@ -82,9 +82,7 @@ public class WordleGame {
     }
 
     private void logGameProgress() { //логирование основных переменных игры
-        logger.println("\n" + "Я загадал слово: " + this.correctAnswer + "\n" +
-                "Попытка: " + this.steps + "\n" + "Ответ игрока: " +
-                this.userAnswer + "\n");
+        logger.println("\n" + "Попытка: " + this.steps + "\n" + "Ответ игрока: " + this.userAnswer + "\n");
     }
 
     public String giveHint() { //даем подсказку

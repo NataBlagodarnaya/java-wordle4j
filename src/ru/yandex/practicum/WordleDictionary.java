@@ -10,19 +10,17 @@ import java.util.Random;
  */
 public class WordleDictionary {
 
-    private static List<String> words;
+    private final List<String> words;
 
     public WordleDictionary(List<String> words) {
         this.words = words;
     }
 
-    public static List<String> getWords() {
+    public List<String> getWords() {
         return words;
     }
 
     public String getRandomWord() {
         return words.get(new Random().nextInt(words.size()));
     }
-
-
 }

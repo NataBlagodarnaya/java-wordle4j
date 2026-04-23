@@ -18,8 +18,8 @@ import java.util.Scanner;
     вывести состояние игры и конечный результат
  */
 public class Wordle {
-    private static Scanner scanner = new Scanner(System.in);
-    private static WordleGame game;
+    private Scanner scanner = new Scanner(System.in);
+    private WordleGame game;
     private static final String DICTIONARY_FILE_NAME = "words_ru.txt";
 
     public static void main(String[] args) {
@@ -31,7 +31,8 @@ public class Wordle {
             // если лог не создается то пользователь продолжает игру просто она не логируется
         }
         try {
-            runGame(DICTIONARY_FILE_NAME, logger);
+            Wordle wordle = new Wordle();
+            wordle.runGame(DICTIONARY_FILE_NAME, logger);
         } catch (Exception e) {
             System.out.println("Игра сломалась :(");
             if (logger != null) {
@@ -42,7 +43,7 @@ public class Wordle {
         }
     }
 
-    public static void runGame(String dictionaryFileName, PrintWriter logger) throws
+    public void runGame(String dictionaryFileName, PrintWriter logger) throws
             IOException, WordleNotGameException {
         WordleDictionaryLoader loader = new WordleDictionaryLoader();
         game = new WordleGame(loader.load(dictionaryFileName), logger);
