@@ -1,9 +1,7 @@
 package ru.yandex.practicum;
 
 import java.io.PrintWriter;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
 в этом классе хранится словарь и состояние игры
@@ -24,7 +22,7 @@ public class WordleGame {
     private int steps;
     static final int TOTAL_ATTEMPTS = 6;//количество попыток отгадать слово
     WordleDictionary dictionary;
-    private final List<String> initialDictionary;
+    private final ArrayList<String> workingDictionaryList;
     private LinkedHashMap<String, String> history;
 
     public WordleGame(WordleDictionary dictionary, PrintWriter logger) {
@@ -33,8 +31,8 @@ public class WordleGame {
         this.userAnswer = null;
         this.steps = 0;
         this.dictionary = dictionary;
-        this.initialDictionary = List.copyOf(dictionary.getWords());
-        this.dictionary.getWords().remove(this.correctAnswer);
+        this.workingDictionaryList = new ArrayList<>(dictionary.getWords());
+        this.workingDictionaryList.remove(this.correctAnswer);
         this.history = new LinkedHashMap<>();
     }
 
@@ -72,7 +70,7 @@ public class WordleGame {
                         "Должно быть существительное в именительном падеже из " +
                         WordleDictionaryLoader.LETTERS_COUNT + " русских букв.");
             }
-            if (!initialDictionary.contains(input) && !input.equals(this.correctAnswer)) {
+            if (!dictionary.getWords().contains(input) && !input.equals(this.correctAnswer)) {
                 throw new WordleGameException("Cлово " + input + " не подходит по условиям игры - его нет в словаре.");
             }
         }
@@ -86,10 +84,10 @@ public class WordleGame {
     }
 
     public String giveHint() { //даем подсказку
-        if (this.dictionary.getWords().isEmpty() || this.steps == TOTAL_ATTEMPTS) {
+        if (this.workingDictionaryList.isEmpty() || this.steps == TOTAL_ATTEMPTS) {
             return this.correctAnswer;
         } else {
-            return this.dictionary.getRandomWord();
+            return this.workingDictionaryList.get(new Random().nextInt(this.workingDictionaryList.size()));
         }
     }
 
@@ -108,17 +106,17 @@ public class WordleGame {
                 matchResult.setCharAt(i, '+');
                 char iChar = this.userAnswer.charAt(i);
                 int currentIndex = i;
-                this.dictionary.getWords().removeIf(word -> word.charAt(currentIndex) != iChar);
+                this.workingDictionaryList.removeIf(word -> word.charAt(currentIndex) != iChar);
             } else {
                 if (this.correctAnswer.indexOf(this.userAnswer.charAt(i)) != -1) {
                     matchResult.setCharAt(i, '^');
                     char iChar = this.userAnswer.charAt(i);
                     int currentIndex = i;
-                    this.dictionary.getWords().removeIf(word -> word.charAt(currentIndex) == iChar);
-                    this.dictionary.getWords().removeIf(word -> !word.contains(String.valueOf(iChar)));
+                    this.workingDictionaryList.removeIf(word -> word.charAt(currentIndex) == iChar);
+                    this.workingDictionaryList.removeIf(word -> !word.contains(String.valueOf(iChar)));
                 } else {
                     String iChar = String.valueOf(this.userAnswer.charAt(i));
-                    this.dictionary.getWords().removeIf(word -> word.contains(iChar));
+                    this.workingDictionaryList.removeIf(word -> word.contains(iChar));
                 }
             }
         }

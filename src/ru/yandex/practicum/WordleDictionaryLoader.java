@@ -31,7 +31,9 @@ public class WordleDictionaryLoader {
             if (words.isEmpty()) {
                 throw new WordleNotGameException("Словарь пуст! Невозможно начать игру.");
             }
+        } catch (IOException e) {
+            throw new WordleNotGameException("Не удалось прочитать файл словаря: " + filename, e);
         }
-        return new WordleDictionary(words);
+        return new WordleDictionary(List.copyOf(words));
     }
 }

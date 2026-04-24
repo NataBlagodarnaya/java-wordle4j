@@ -33,6 +33,11 @@ public class Wordle {
         try {
             Wordle wordle = new Wordle();
             wordle.runGame(DICTIONARY_FILE_NAME, logger);
+        } catch (WordleNotGameException e) {
+            System.out.println("Игра сломалась :(");
+            if (logger != null) {
+                e.printStackTrace(logger);
+            }
         } catch (Exception e) {
             System.out.println("Игра сломалась :(");
             if (logger != null) {
@@ -44,7 +49,7 @@ public class Wordle {
     }
 
     public void runGame(String dictionaryFileName, PrintWriter logger) throws
-            IOException, WordleNotGameException {
+            IOException {
         WordleDictionaryLoader loader = new WordleDictionaryLoader();
         game = new WordleGame(loader.load(dictionaryFileName), logger);
         System.out.println("Привет! Я загадал слово из словаря. Это существительное в именительном падеже из " +
